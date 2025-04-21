@@ -1,0 +1,73 @@
+package fitur;
+
+import data.SuratBerhargaNegara;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SBNFitur {
+    private static List<SuratBerhargaNegara> daftarSBN = new ArrayList<>();
+
+    public boolean tambahSBN(String nama, double bunga, int jangkaWaktu,
+                             String tanggalJatuhTempo, double kuotaNasional) {
+        for (SuratBerhargaNegara sbn : daftarSBN) {
+            if (sbn.getNama().equals(nama)) {
+                return false;
+            }
+        }
+
+        SuratBerhargaNegara sbnBaru = new SuratBerhargaNegara(nama, bunga, jangkaWaktu,
+                tanggalJatuhTempo, kuotaNasional);
+        daftarSBN.add(sbnBaru);
+        return true;
+    }
+
+    public SuratBerhargaNegara getSBN(String nama) {
+        for (SuratBerhargaNegara sbn : daftarSBN) {
+            if (sbn.getNama().equals(nama)) {
+                return sbn;
+            }
+        }
+        return null;
+    }
+
+    public void tampilDaftarSBN() {
+        System.out.println("\n===== DAFTAR SURAT BERHARGA NEGARA =====");
+
+        if (daftarSBN.isEmpty()) {
+            System.out.println("Tidak ada SBN yang tersedia.");
+            return;
+        }
+
+        for (SuratBerhargaNegara sbn : daftarSBN) {
+            sbn.tampilInfo();
+        }
+    }
+
+    public void simulasiSBN(String nama, double nominal) {
+        SuratBerhargaNegara sbn = getSBN(nama);
+
+        if (sbn == null) {
+            System.out.println("SBN dengan nama " + nama + " tidak ditemukan.");
+            return;
+        }
+
+        double bungaBulanan = sbn.hitungBungaBulanan(nominal);
+        double bungaTahunan = bungaBulanan * 12;
+
+        System.out.println("\n===== SIMULASI SBN " + nama + " =====");
+        System.out.println("Nominal investasi: Rp " + String.format("%,.0f", nominal));
+        System.out.println("Bunga: " + sbn.getBunga() + "%");
+        System.out.println("Jangka waktu: " + sbn.getJangkaWaktu() + " tahun");
+        System.out.println("Tanggal jatuh tempo: " + sbn.getTanggalJatuhTempo());
+        System.out.println("\nBunga per bulan: Rp " + String.format("%,.0f", bungaBulanan));
+        System.out.println("Bunga per tahun: Rp " + String.format("%,.0f", bungaTahunan));
+        System.out.println("Total bunga selama " + sbn.getJangkaWaktu() + " tahun: Rp " +
+                String.format("%,.0f", bungaTahunan * sbn.getJangkaWaktu()));
+        System.out.println("Total nilai pada jatuh tempo: Rp " +
+                String.format("%,.0f", nominal + (bungaTahunan * sbn.getJangkaWaktu())));
+    }
+
+    public static List<SuratBerhargaNegara> getDaftarSBN() {
+        return daftarSBN;
+    }
+}
