@@ -1,0 +1,71 @@
+package data;
+
+public class SuratBerhargaNegara {
+    private String nama;
+    private double bunga; // dalam persen
+    private int jangkaWaktu; // dalam tahun
+    private String tanggalJatuhTempo;
+    private double kuotaNasional;
+    private double kuotaTerpakai;
+
+    public SuratBerhargaNegara(String nama, double bunga, int jangkaWaktu,
+                               String tanggalJatuhTempo, double kuotaNasional) {
+        this.nama = nama;
+        this.bunga = bunga;
+        this.jangkaWaktu = jangkaWaktu;
+        this.tanggalJatuhTempo = tanggalJatuhTempo;
+        this.kuotaNasional = kuotaNasional;
+        this.kuotaTerpakai = 0;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public double getBunga() {
+        return bunga;
+    }
+
+    public int getJangkaWaktu() {
+        return jangkaWaktu;
+    }
+
+    public String getTanggalJatuhTempo() {
+        return tanggalJatuhTempo;
+    }
+
+    public double getKuotaNasional() {
+        return kuotaNasional;
+    }
+
+    public double getKuotaTerpakai() {
+        return kuotaTerpakai;
+    }
+
+    public double getKuotaTersedia() {
+        return kuotaNasional - kuotaTerpakai;
+    }
+
+    public boolean tambahPembelian(double nominal) {
+        if (nominal <= getKuotaTersedia()) {
+            kuotaTerpakai += nominal;
+            return true;
+        } else {
+            System.out.println("Maaf, kuota SBN tidak cukup. Kuota tersisa: Rp " +
+                    String.format("%,.0f", getKuotaTersedia()));
+            return false;
+        }
+    }
+
+    public double hitungBungaBulanan(double nominal) {
+        return (bunga / 12) * 0.9 * nominal / 100;
+    }
+
+    public void tampilInfo() {
+        System.out.println("Nama: " + nama +
+                " | Bunga: " + bunga + "%" +
+                " | Jangka Waktu: " + jangkaWaktu + " tahun" +
+                " | Jatuh Tempo: " + tanggalJatuhTempo +
+                " | Kuota Tersedia: Rp " + String.format("%,.0f", getKuotaTersedia()));
+    }
+}
