@@ -1,0 +1,42 @@
+package akun;
+
+import fitur.SahamFitur;
+import fitur.SBNFitur;
+
+public class Admin extends User {
+    public Admin(String username, String password) {
+        super(username, password);
+    }
+
+    public void tambahSaham(SahamFitur sahamFitur, String kode, String namaPerusahaan, double harga) {
+        boolean berhasil = sahamFitur.tambahSaham(kode, namaPerusahaan, harga);
+
+        if (berhasil) {
+            System.out.println("Saham " + kode + " berhasil ditambahkan.");
+        } else {
+            System.out.println("Gagal menambahkan saham. Kode saham sudah ada.");
+        }
+    }
+
+    public void ubahHargaSaham(SahamFitur sahamFitur, String kode, double hargaBaru) {
+        boolean berhasil = sahamFitur.ubahHargaSaham(kode, hargaBaru);
+
+        if (berhasil) {
+            System.out.println("Harga saham " + kode + " berhasil diubah menjadi Rp " +
+                    String.format("%,.0f", hargaBaru));
+        } else {
+            System.out.println("Gagal mengubah harga saham. Kode saham tidak ditemukan.");
+        }
+    }
+
+    public void tambahSBN(SBNFitur sbnFitur, String nama, double bunga, int jangkaWaktu,
+                          String tanggalJatuhTempo, double kuotaNasional) {
+        boolean berhasil = sbnFitur.tambahSBN(nama, bunga, jangkaWaktu, tanggalJatuhTempo, kuotaNasional);
+
+        if (berhasil) {
+            System.out.println("SBN " + nama + " berhasil ditambahkan.");
+        } else {
+            System.out.println("Gagal menambahkan SBN. Nama SBN sudah ada.");
+        }
+    }
+}
