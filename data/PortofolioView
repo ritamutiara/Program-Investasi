@@ -1,0 +1,153 @@
+package data;
+
+import data.Portofolio.KepemilikanSaham;
+import data.Portofolio.KepemilikanSBN;
+import fitur.SahamFitur;
+import java.util.List;
+
+public class PortofolioView {
+    public void tampilkanPortofolio(Portofolio portofolio, SahamFitur sahamFitur, List<SuratBerhargaNegara> daftarSBNTersedia) {
+        System.out.println("\n===== PORTOFOLIO INVESTASI =====");
+
+        tampilkanDaftarSaham(portofolio, sahamFitur);
+
+        tampilkanDaftarSBN(portofolio, daftarSBNTersedia);
+    }
+
+    public void tampilkanDaftarSaham(Portofolio portofolio, SahamFitur sahamFitur) {
+        List<KepemilikanSaham> daftarSaham = portofolio.getDaftarSaham();
+
+        System.out.println("\n--- SAHAM ---");
+        if (daftarSaham.isEmpty()) {
+            System.out.println("Tidak ada saham di portofolio.");
+            return;
+        }
+
+        System.out.println("Kode | Perusahaan | Jumlah | Harga Beli | Nilai Beli | Harga Pasar | Nilai Pasar | Keuntungan");
+        System.out.println("---------------------------------------------------------------------------------------------");
+
+        double totalNilaiPembelian = 0;
+        double totalNilaiPasar = 0;
+
+        for (KepemilikanSaham kepemilikan : daftarSaham) {
+            String kode = kepemilikan.getKode();
+            int jumlah = kepemilikan.getJumlahLembar();
+            double hargaBeli = kepemilikan.getHargaBeli();
+
+            Saham saham = sahamFitur.getSaham(kode);
+            if (saham != null) {
+                double hargaSekarang = saham.getHarga();
+                double nilaiBeli = hargaBeli * jumlah;
+                double nilaiPasar = hargaSekarang * jumlah;
+                double keuntungan = nilaiPasar - nilaiBeli;
+
+                System.out.printf("%-4s | %-10s | %6d | %,10.0f | %,10.0f | %,11.0f | %,11.0f | %,10.0f%n",
+                        kode, saham.getNamaPerusahaan(), jumlah, hargaBeli, nilaiBeli,
+                        hargaSekarang, nilaiPasar, keuntungan);
+
+                totalNilaiPembelian += nilaiBeli;
+                totalNilaiPasar += nilaiPasar;
+            }
+        }
+
+        System.out.println("---------------------------------------------------------------------------------------------");
+        System.out.printf("TOTAL                                 %,10.0f                | %,11.0f | %,10.0f%n",
+                totalNilaiPembelian, totalNilaiPasar, (totalNilaiPasar - totalNilaiPembelian));
+    }
+
+    public void tampilkanDaftarSBN(Portofolio portofolio, List<SuratBerhargaNegara> daftarSBNTersedia) {
+        List<KepemilikanSBN> daftarSBN = portofolio.getDaftarSBN();
+
+        System.out.println("\n--- SURAT BERHARGA NEGARA ---");
+        if (daftarSBN.isEmpty()) {
+            System.out.println("Tidak ada SBN di portofolio.");
+            return;
+        }
+
+        System.out.println("Nama | Bunga (%) | Jangka Waktu | Jatuh Tempo | Nominal | Bunga/Bulan");
+        System.out.println("------------------------------------------------------------------");
+
+        double totalNominal = 0;
+        double totalBunga = 0;
+
+        for (KepemilikanSBN kepemilikan : daftarSBN) {
+            String nama = kepemilikan.getNama();
+            double nominal = kepemilikan.getNominal();
+
+            SuratBerhargaNegara sbn = null;
+            for (SuratBerhargaNegara s : daftarSBNTersedia) {
+                if (s.getNama().equals(nama)) {
+                    sbn = s;
+                    break;
+                }
+            }
+
+            if (sbn != null) {
+                double bungaBulanan = sbn.hitungBungaBulanan(nominal);
+
+                System.out.printf("%-5s | %8.2f%% | %11d | %11s | %,9.0f | %,11.0f%n",
+                        nama, sbn.getBunga(), sbn.getJangkaWaktu(),
+                        sbn.getTanggalJatuhTempo(), nominal, bungaBulanan);
+
+                totalNominal += nominal;
+                totalBunga += bungaBulanan;
+            }
+        }
+
+        System.out.println("------------------------------------------------------------------");
+        System.out.printf("TOTAL                                     | %,9.0f | %,11.0f%n",
+                totalNominal, totalBunga);
+    }
+
+    public void tampilkanRingkasanPortofolio(Portofolio portofolio, SahamFitur sahamFitur, List<SuratBerhargaNegara> daftarSBNTersedia) {
+        double totalNilaiPembelianSaham = portofolio.hitungTotalNilaiPembelianSaham();
+        double totalNilaiPasarSaham = portofolio.hitungTotalNilaiPasarSaham(sahamFitur);
+        double totalNominalSBN = portofolio.hitungTotalNominalSBN();
+        double totalBungaSBN = portofolio.hitungTotalBungaBulananSBN(daftarSBNTersedia);
+
+        System.out.println("\n===== RINGKASAN PORTOFOLIO =====");
+        System.out.println("Jumlah Jenis Saham: " + portofolio.getDaftarSaham().size());
+        System.out.println("Total Nilai Pembelian Saham: Rp " + String.format("%,.0f", totalNilaiPembelianSaham));
+        System.out.println("Total Nilai Pasar Saham: Rp " + String.format("%,.0f", totalNilaiPasarSaham));
+        System.out.println("Keuntungan/Kerugian: Rp " + String.format("%,.0f", (totalNilaiPasarSaham - totalNilaiPembelianSaham)));
+
+        System.out.println("\nJumlah Jenis SBN: " + portofolio.getDaftarSBN().size());
+        System.out.println("Total Nominal Investasi SBN: Rp " + String.format("%,.0f", totalNominalSBN));
+        System.out.println("Total Bunga Bulanan: Rp " + String.format("%,.0f", totalBungaSBN));
+        System.out.println("Total Bunga Tahunan: Rp " + String.format("%,.0f", totalBungaSBN * 12));
+
+        System.out.println("\nTotal Nilai Portofolio: Rp " +
+                String.format("%,.0f", (totalNilaiPasarSaham + totalNominalSBN)));
+    }
+
+    /**
+     * Menampilkan daftar saham dalam format sederhana
+     */
+    public void tampilkanDaftarSahamSederhana(Portofolio portofolio, SahamFitur sahamFitur) {
+        List<KepemilikanSaham> daftarSaham = portofolio.getDaftarSaham();
+
+        System.out.println("\n===== SAHAM YANG DIMILIKI =====");
+
+        if (daftarSaham.isEmpty()) {
+            System.out.println("Tidak ada saham yang dimiliki.");
+            return;
+        }
+
+        System.out.println("Kode | Perusahaan | Jumlah Lembar | Harga Saat Ini | Total Nilai");
+        System.out.println("----------------------------------------------------------------");
+
+        for (KepemilikanSaham kepemilikan : daftarSaham) {
+            String kode = kepemilikan.getKode();
+            int jumlahLembar = kepemilikan.getJumlahLembar();
+
+            Saham saham = sahamFitur.getSaham(kode);
+            if (saham != null) {
+                double harga = saham.getHarga();
+                double totalNilai = harga * jumlahLembar;
+
+                System.out.printf("%-4s | %-10s | %12d | Rp %,12.0f | Rp %,12.0f%n",
+                        kode, saham.getNamaPerusahaan(), jumlahLembar, harga, totalNilai);
+            }
+        }
+    }
+}
