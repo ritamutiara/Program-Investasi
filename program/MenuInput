@@ -1,0 +1,21 @@
+package program;
+
+import fitur.LoginFitur;
+import fitur.SahamFitur;
+import fitur.SBNFitur;
+import akun.Admin;
+import akun.Customer;
+
+public class MenuInput {
+    public static void inisialisasi(LoginFitur loginFitur, SahamFitur sahamFitur, SBNFitur sbnFitur) {
+        loginFitur.tambahUser(new Admin("admin", "admin123"));
+        loginFitur.tambahUser(new Customer("customer", "customer123"));
+
+        sahamFitur.tambahSaham("BBCA", "Bank Central Asia", 9000);
+        sahamFitur.tambahSaham("GOTO", "GoTo", 100);
+        sahamFitur.tambahSaham("TLKM", "Telkom Indonesia", 3500);
+
+        sbnFitur.tambahSBN("SBR001", 5.7, 2, "01-01-2027", 10000000000.0);
+        sbnFitur.tambahSBN("ORI002", 6.2, 3, "01-01-2028", 5000000000.0);
+    }
+}
