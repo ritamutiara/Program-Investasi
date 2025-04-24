@@ -1,0 +1,106 @@
+package akun;
+
+import data.Portofolio;
+import data.Saham;
+import data.SuratBerhargaNegara;
+import fitur.SahamFitur;
+import fitur.SBNFitur;
+import data.PortofolioView;
+
+public class Customer extends User {
+    private Portofolio portofolio;
+    private PortofolioView portofolioView; // View untuk menampilkan portofolio
+
+    public Customer(String username, String password) {
+        super(username, password);
+        this.portofolio = new Portofolio();
+        this.portofolioView = new PortofolioView();
+    }
+
+    // Method untuk membeli saham
+    public void beliSaham(SahamFitur sahamFitur, String kode, int jumlahLembar) {
+        Saham saham = sahamFitur.getSaham(kode);
+
+        if (saham == null) {
+            System.out.println("Saham dengan kode " + kode + " tidak ditemukan.");
+            return;
+        }
+
+        double harga = saham.getHarga();
+        double totalNilai = harga * jumlahLembar;
+
+        portofolio.tambahSaham(kode, jumlahLembar, harga);
+
+        System.out.println("Berhasil membeli " + jumlahLembar + " lembar saham " +
+                kode + " dengan total nilai Rp " + String.format("%,.0f", totalNilai));
+    }
+
+    // Method untuk menjual saham
+    public void jualSaham(SahamFitur sahamFitur, String kode, int jumlahLembar) {
+        Saham saham = sahamFitur.getSaham(kode);
+
+        if (saham == null) {
+            System.out.println("Saham dengan kode " + kode + " tidak ditemukan.");
+            return;
+        }
+
+        int jumlahDimiliki = portofolio.getJumlahSaham(kode);
+
+        if (jumlahDimiliki < jumlahLembar) {
+            System.out.println("Gagal menjual saham. Anda hanya memiliki " +
+                    jumlahDimiliki + " lembar saham " + kode + ".");
+            return;
+        }
+
+        double harga = saham.getHarga();
+        double totalNilai = harga * jumlahLembar;
+
+        portofolio.jualSaham(kode, jumlahLembar);
+
+        System.out.println("Berhasil menjual " + jumlahLembar + " lembar saham " +
+                kode + " dengan total nilai Rp " + String.format("%,.0f", totalNilai));
+    }
+
+    // Method untuk membeli SBN
+    public void beliSBN(SBNFitur sbnFitur, String nama, double nominal) {
+        SuratBerhargaNegara sbn = sbnFitur.getSBN(nama);
+
+        if (sbn == null) {
+            System.out.println("SBN dengan nama " + nama + " tidak ditemukan.");
+            return;
+        }
+
+        if (nominal <= 0) {
+            System.out.println("Nominal pembelian harus lebih dari 0.");
+            return;
+        }
+
+        boolean berhasil = sbn.tambahPembelian(nominal);
+
+        if (berhasil) {
+            portofolio.tambahSBN(nama, nominal);
+
+            System.out.println("Berhasil membeli SBN " + nama + " dengan nominal Rp " +
+                    String.format("%,.0f", nominal));
+        }
+    }
+
+    // Method untuk menampilkan daftar saham yang dimiliki
+    public void tampilkanSahamDimiliki(SahamFitur sahamFitur) {
+        portofolioView.tampilkanDaftarSahamSederhana(portofolio, sahamFitur);
+    }
+
+    // Method untuk menampilkan portofolio lengkap
+    public void tampilkanPortofolio(SahamFitur sahamFitur) {
+        portofolioView.tampilkanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
+    }
+
+    // Method untuk menampilkan ringkasan portofolio
+    public void tampilkanRingkasanPortofolio(SahamFitur sahamFitur) {
+        portofolioView.tampilkanRingkasanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
+    }
+
+    public Portofolio getPortofolio() {
+        return portofolio;
+    }
+}
