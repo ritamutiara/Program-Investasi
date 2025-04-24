@@ -1,0 +1,72 @@
+package program;
+
+import fitur.LoginFitur;
+import fitur.SahamFitur;
+import fitur.SBNFitur;
+import akun.Admin;
+import akun.Customer;
+import akun.User;
+import bantuan.InputHelper;
+
+public class Main {
+    private static LoginFitur loginFitur;
+    private static SahamFitur sahamFitur;
+    private static SBNFitur sbnFitur;
+
+    public static void main(String[] args) {
+        mulai();
+    }
+
+    public static void mulai() {
+        loginFitur = new LoginFitur();
+        sahamFitur = new SahamFitur();
+        sbnFitur = new SBNFitur();
+        MenuInput.inisialisasi(loginFitur, sahamFitur, sbnFitur);
+
+        boolean aplikasiBerjalan = true;
+        while (aplikasiBerjalan) {
+            tampilMenuAwal();
+            int pilihan = InputHelper.readNumber("Pilih menu: ");
+
+            switch (pilihan) {
+                case 1:
+                    prosesLogin();
+                    break;
+                case 0:
+                    aplikasiBerjalan = false;
+                    System.out.println("Terima kasih telah menggunakan aplikasi.");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid!");
+                    break;
+            }
+        }
+    }
+
+    private static void tampilMenuAwal() {
+        System.out.println("\n===== APLIKASI INVESTASI =====");
+        System.out.println("1. Login");
+        System.out.println("0. Logout");
+    }
+
+    private static void prosesLogin() {
+        String username = InputHelper.readString("Username: ");
+        String password = InputHelper.readString("Password: ");
+
+        User user = loginFitur.login(username, password);
+        if (user == null) {
+            System.out.println("Login gagal! Username atau password salah.");
+            return;
+        }
+
+        System.out.println("Login berhasil sebagai " + user.getUsername());
+
+        if (user instanceof Admin) {
+            Admin admin = (Admin) user;
+            MenuAdmin.tampilkan(admin, sahamFitur, sbnFitur);
+        } else if (user instanceof Customer) {
+            Customer customer = (Customer) user;
+            MenuCustomer.tampilkan(customer, sahamFitur, sbnFitur);
+        }
+    }
+}
