@@ -3,21 +3,27 @@ package akun;
 import data.Portofolio;
 import data.Saham;
 import data.SuratBerhargaNegara;
+import data.Transaksi;
+import data.Transaksi.JenisTransaksi;
+import data.PortofolioView;
 import fitur.SahamFitur;
 import fitur.SBNFitur;
-import data.PortofolioView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer extends User {
     private Portofolio portofolio;
-    private PortofolioView portofolioView; // View untuk menampilkan portofolio
+    private PortofolioView portofolioView;
+    private List<Transaksi> riwayatTransaksi;
 
     public Customer(String username, String password) {
         super(username, password);
         this.portofolio = new Portofolio();
         this.portofolioView = new PortofolioView();
+        this.riwayatTransaksi = new ArrayList<>();
     }
 
-    // Method untuk membeli saham
     public void beliSaham(SahamFitur sahamFitur, String kode, int jumlahLembar) {
         Saham saham = sahamFitur.getSaham(kode);
 
@@ -31,11 +37,13 @@ public class Customer extends User {
 
         portofolio.tambahSaham(kode, jumlahLembar, harga);
 
+        Transaksi transaksi = new Transaksi(JenisTransaksi.BELI_SAHAM, kode, jumlahLembar, harga);
+        riwayatTransaksi.add(transaksi);
+
         System.out.println("Berhasil membeli " + jumlahLembar + " lembar saham " +
                 kode + " dengan total nilai Rp " + String.format("%,.0f", totalNilai));
     }
 
-    // Method untuk menjual saham
     public void jualSaham(SahamFitur sahamFitur, String kode, int jumlahLembar) {
         Saham saham = sahamFitur.getSaham(kode);
 
@@ -57,11 +65,13 @@ public class Customer extends User {
 
         portofolio.jualSaham(kode, jumlahLembar);
 
+        Transaksi transaksi = new Transaksi(JenisTransaksi.JUAL_SAHAM, kode, jumlahLembar, harga);
+        riwayatTransaksi.add(transaksi);
+
         System.out.println("Berhasil menjual " + jumlahLembar + " lembar saham " +
                 kode + " dengan total nilai Rp " + String.format("%,.0f", totalNilai));
     }
 
-    // Method untuk membeli SBN
     public void beliSBN(SBNFitur sbnFitur, String nama, double nominal) {
         SuratBerhargaNegara sbn = sbnFitur.getSBN(nama);
 
@@ -80,27 +90,31 @@ public class Customer extends User {
         if (berhasil) {
             portofolio.tambahSBN(nama, nominal);
 
+            Transaksi transaksi = new Transaksi(nama, nominal);
+            riwayatTransaksi.add(transaksi);
+
             System.out.println("Berhasil membeli SBN " + nama + " dengan nominal Rp " +
                     String.format("%,.0f", nominal));
         }
     }
 
-    // Method untuk menampilkan daftar saham yang dimiliki
     public void tampilkanSahamDimiliki(SahamFitur sahamFitur) {
         portofolioView.tampilkanDaftarSahamSederhana(portofolio, sahamFitur);
     }
 
-    // Method untuk menampilkan portofolio lengkap
     public void tampilkanPortofolio(SahamFitur sahamFitur) {
         portofolioView.tampilkanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
     }
 
-    // Method untuk menampilkan ringkasan portofolio
     public void tampilkanRingkasanPortofolio(SahamFitur sahamFitur) {
         portofolioView.tampilkanRingkasanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
     }
 
     public Portofolio getPortofolio() {
         return portofolio;
+    }
+
+    public List<Transaksi> getRiwayatTransaksi() {
+        return riwayatTransaksi;
     }
 }
