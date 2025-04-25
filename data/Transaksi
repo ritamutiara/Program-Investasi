@@ -1,0 +1,83 @@
+package data;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Transaksi {
+    public enum JenisTransaksi {
+        BELI_SAHAM,
+        JUAL_SAHAM,
+        BELI_SBN
+    }
+
+    private Date tanggal;
+    private JenisTransaksi jenis;
+    private String kode;
+    private int jumlahLembar;
+    private double nominal;
+    private double hargaSatuan;
+
+    public Transaksi(JenisTransaksi jenis, String kode, int jumlahLembar, double hargaSatuan) {
+        this.tanggal = new Date();
+        this.jenis = jenis;
+        this.kode = kode;
+        this.jumlahLembar = jumlahLembar;
+        this.hargaSatuan = hargaSatuan;
+        this.nominal = jumlahLembar * hargaSatuan;
+    }
+
+    public Transaksi(String kodeSBN, double nominal) {
+        this.tanggal = new Date();
+        this.jenis = JenisTransaksi.BELI_SBN;
+        this.kode = kodeSBN;
+        this.nominal = nominal;
+        this.jumlahLembar = 0;
+        this.hargaSatuan = 0;
+    }
+
+    public Date getTanggal() {
+        return tanggal;
+    }
+
+    public String getTanggalFormatted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return sdf.format(tanggal);
+    }
+
+    public JenisTransaksi getJenis() {
+        return jenis;
+    }
+
+    public String getKode() {
+        return kode;
+    }
+
+    public int getJumlahLembar() {
+        return jumlahLembar;
+    }
+
+    public double getNominal() {
+        return nominal;
+    }
+
+    public double getHargaSatuan() {
+        return hargaSatuan;
+    }
+
+    public String getDeskripsi() {
+        switch (jenis) {
+            case BELI_SAHAM:
+                return "Beli " + jumlahLembar + " lembar saham " + kode +
+                        " @ Rp " + String.format("%,.0f", hargaSatuan) +
+                        " (Total: Rp " + String.format("%,.0f", nominal) + ")";
+            case JUAL_SAHAM:
+                return "Jual " + jumlahLembar + " lembar saham " + kode +
+                        " @ Rp " + String.format("%,.0f", hargaSatuan) +
+                        " (Total: Rp " + String.format("%,.0f", nominal) + ")";
+            case BELI_SBN:
+                return "Beli SBN " + kode + " senilai Rp " + String.format("%,.0f", nominal);
+            default:
+                return "Transaksi tidak diketahui";
+        }
+    }
+}
