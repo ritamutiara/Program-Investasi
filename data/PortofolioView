@@ -120,9 +120,6 @@ public class PortofolioView {
                 String.format("%,.0f", (totalNilaiPasarSaham + totalNominalSBN)));
     }
 
-    /**
-     * Menampilkan daftar saham dalam format sederhana
-     */
     public void tampilkanDaftarSahamSederhana(Portofolio portofolio, SahamFitur sahamFitur) {
         List<KepemilikanSaham> daftarSaham = portofolio.getDaftarSaham();
 
