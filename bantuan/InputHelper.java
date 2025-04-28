@@ -17,7 +17,7 @@ public class InputHelper {
         }
     }
 
-    // Method to read a double
+    // Method untuk membaca double
     public static double readDouble(String pesan) {
         while (true) {
             try {
@@ -29,13 +29,13 @@ public class InputHelper {
         }
     }
 
-    // Method to read a string
+    // Method untuk membaca string
     public static String readString(String pesan) {
         System.out.print(pesan);
         return scanner.nextLine();
     }
 
-    // Static method to close the scanner when program ends
+    // Static method untuk menutup scanner ketika program berakhir
     public static void closeScanner() {
         scanner.close();
     }
