@@ -106,10 +106,6 @@ public class Customer extends User {
         portofolioView.tampilkanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
     }
 
-    public void tampilkanRingkasanPortofolio(SahamFitur sahamFitur) {
-        portofolioView.tampilkanRingkasanPortofolio(portofolio, sahamFitur, SBNFitur.getDaftarSBN());
-    }
-
     public Portofolio getPortofolio() {
         return portofolio;
     }
