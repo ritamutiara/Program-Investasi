@@ -99,27 +99,6 @@ public class PortofolioView {
                 totalNominal, totalBunga);
     }
 
-    public void tampilkanRingkasanPortofolio(Portofolio portofolio, SahamFitur sahamFitur, List<SuratBerhargaNegara> daftarSBNTersedia) {
-        double totalNilaiPembelianSaham = portofolio.hitungTotalNilaiPembelianSaham();
-        double totalNilaiPasarSaham = portofolio.hitungTotalNilaiPasarSaham(sahamFitur);
-        double totalNominalSBN = portofolio.hitungTotalNominalSBN();
-        double totalBungaSBN = portofolio.hitungTotalBungaBulananSBN(daftarSBNTersedia);
-
-        System.out.println("\n===== RINGKASAN PORTOFOLIO =====");
-        System.out.println("Jumlah Jenis Saham: " + portofolio.getDaftarSaham().size());
-        System.out.println("Total Nilai Pembelian Saham: Rp " + String.format("%,.0f", totalNilaiPembelianSaham));
-        System.out.println("Total Nilai Pasar Saham: Rp " + String.format("%,.0f", totalNilaiPasarSaham));
-        System.out.println("Keuntungan/Kerugian: Rp " + String.format("%,.0f", (totalNilaiPasarSaham - totalNilaiPembelianSaham)));
-
-        System.out.println("\nJumlah Jenis SBN: " + portofolio.getDaftarSBN().size());
-        System.out.println("Total Nominal Investasi SBN: Rp " + String.format("%,.0f", totalNominalSBN));
-        System.out.println("Total Bunga Bulanan: Rp " + String.format("%,.0f", totalBungaSBN));
-        System.out.println("Total Bunga Tahunan: Rp " + String.format("%,.0f", totalBungaSBN * 12));
-
-        System.out.println("\nTotal Nilai Portofolio: Rp " +
-                String.format("%,.0f", (totalNilaiPasarSaham + totalNominalSBN)));
-    }
-
     public void tampilkanDaftarSahamSederhana(Portofolio portofolio, SahamFitur sahamFitur) {
         List<KepemilikanSaham> daftarSaham = portofolio.getDaftarSaham();
 
