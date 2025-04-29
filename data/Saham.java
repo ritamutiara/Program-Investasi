@@ -30,15 +30,14 @@ public class Saham {
     public void setHarga(double harga) {
         if (harga > 0) {
             this.harga = harga;
-        }
-        else {
+        } else {
             System.out.println("Harga saham tidak bisa negatif atau nol!");
         }
     }
 
     public void tampilInfo() {
-        System.out.println("Kode: " + kode +
-                " | Perusahaan: " + namaPerusahaan +
-                " | Harga: Rp " + String.format("%,.0f", harga));
+        System.out.println("================================================================================");
+        System.out.printf("| Kode: %-6s | Perusahaan: %-25s | Harga: Rp %-11s |\n", kode, namaPerusahaan, String.format("%,.0f", harga));
+        System.out.println("================================================================================");
     }
 }
