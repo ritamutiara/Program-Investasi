@@ -62,10 +62,10 @@ public class SuratBerhargaNegara {
     }
 
     public void tampilInfo() {
-        System.out.println("Nama: " + nama +
-                " | Bunga: " + bunga + "%" +
-                " | Jangka Waktu: " + jangkaWaktu + " tahun" +
-                " | Jatuh Tempo: " + tanggalJatuhTempo +
-                " | Kuota Tersedia: Rp " + String.format("%,.0f", getKuotaTersedia()));
+        System.out.println("===========================================================================================================================");
+        System.out.printf("| Nama: %-7s | Bunga: %-5.1f%% | Jangka Waktu (tahun): %-3d| Jatuh Tempo: %-11s | Kuota Tersedia: Rp %-14s |\n",
+                nama, bunga, jangkaWaktu, tanggalJatuhTempo, String.format("%,.0f", getKuotaTersedia()));
+        System.out.println("===========================================================================================================================");
+
     }
 }
