@@ -18,6 +18,7 @@ public class Main {
     }
 
     public static void mulai() {
+        // Inisialisasi dan pengisian awal
         loginFitur = new LoginFitur();
         sahamFitur = new SahamFitur();
         sbnFitur = new SBNFitur();
@@ -44,9 +45,13 @@ public class Main {
     }
 
     private static void tampilMenuAwal() {
-        System.out.println("\n===== APLIKASI INVESTASI =====");
-        System.out.println("1. Login");
-        System.out.println("0. Logout");
+        System.out.println("\n==================================");
+        System.out.printf("| %-30s |\n", "APLIKASI INVESTASI");
+        System.out.println("==================================");
+        System.out.printf("| %-2s %-27s |\n", "1.", "Login");
+        System.out.printf("| %-2s %-27s |\n", "0.", "Logout");
+        System.out.println("==================================");
+
     }
 
     private static void prosesLogin() {
