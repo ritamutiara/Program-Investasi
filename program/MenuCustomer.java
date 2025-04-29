@@ -1,7 +1,6 @@
 package program;
 
 import akun.Customer;
-import data.Transaksi;
 import data.TransaksiView;
 import fitur.SahamFitur;
 import fitur.SBNFitur;
@@ -13,14 +12,19 @@ public class MenuCustomer {
         TransaksiView transaksiView = new TransaksiView();
 
         while (!logout) {
-            System.out.println("\n===== MENU NASABAH =====");
-            System.out.println("1. Beli Saham");
-            System.out.println("2. Jual Saham");
-            System.out.println("3. Beli SBN");
-            System.out.println("4. Simulasi SBN");
-            System.out.println("5. Portofolio");
-            System.out.println("6. Riwayat Transaksi");
-            System.out.println("7. Logout");
+            System.out.println("\n===== MENU CUSTOMER =====");
+            System.out.println("==================================");
+            System.out.printf("| %-30s |\n", "MENU CUSTOMER");
+            System.out.println("==================================");
+            System.out.printf("| %-2s %-27s |\n", "1.", "Beli Saham");
+            System.out.printf("| %-2s %-27s |\n", "2.", "Jual Saham");
+            System.out.printf("| %-2s %-27s |\n", "3.", "Beli SBN");
+            System.out.printf("| %-2s %-27s |\n", "4.", "Simulasi SBN");
+            System.out.printf("| %-2s %-27s |\n", "5.", "Portofolio");
+            System.out.printf("| %-2s %-27s |\n", "6.", "Riwayat Transaksi");
+            System.out.printf("| %-2s %-27s |\n", "7.", "Logout");
+            System.out.println("==================================");
+
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
 
@@ -72,9 +76,14 @@ public class MenuCustomer {
 
         while (!logout) {
             System.out.println("\n===== MENU RIWAYAT TRANSAKSI =====");
-            System.out.println("1. Lihat Semua Transaksi");
-            System.out.println("2. Cari Transaksi Berdasarkan Kode");
-            System.out.println("3. Logout");
+            System.out.println("===============================================");
+            System.out.printf("| %-43s |\n", "MENU RIWAYAT TRANSAKSI");
+            System.out.println("===============================================");
+            System.out.printf("| %-2s %-40s |\n", "1.", "Lihat Semua Transaksi");
+            System.out.printf("| %-2s %-40s |\n", "2.", "Cari Transaksi Berdasarkan Kode");
+            System.out.printf("| %-2s %-40s |\n", "3.", "Logout");
+            System.out.println("===============================================");
+
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
 
