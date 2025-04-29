@@ -55,16 +55,18 @@ public class SBNFitur {
         double bungaTahunan = bungaBulanan * 12;
 
         System.out.println("\n===== SIMULASI SBN " + nama + " =====");
-        System.out.println("Nominal investasi: Rp " + String.format("%,.0f", nominal));
-        System.out.println("Bunga: " + sbn.getBunga() + "%");
-        System.out.println("Jangka waktu: " + sbn.getJangkaWaktu() + " tahun");
-        System.out.println("Tanggal jatuh tempo: " + sbn.getTanggalJatuhTempo());
-        System.out.println("\nBunga per bulan: Rp " + String.format("%,.0f", bungaBulanan));
-        System.out.println("Bunga per tahun: Rp " + String.format("%,.0f", bungaTahunan));
-        System.out.println("Total bunga selama " + sbn.getJangkaWaktu() + " tahun: Rp " +
-                String.format("%,.0f", bungaTahunan * sbn.getJangkaWaktu()));
-        System.out.println("Total nilai pada jatuh tempo: Rp " +
-                String.format("%,.0f", nominal + (bungaTahunan * sbn.getJangkaWaktu())));
+        System.out.println("=========================================================");
+        System.out.printf("| Nominal Investasi           : Rp %-20s |\n", String.format("%,.0f", nominal));
+        System.out.printf("| Bunga                       : %-5.1f%% %-16s |\n", sbn.getBunga(), "");
+        System.out.printf("| Jangka Waktu (tahun)        : %-10d %-12s |\n", sbn.getJangkaWaktu(), "");
+        System.out.printf("| Tanggal Jatuh Tempo         : %-15s %-7s |\n", sbn.getTanggalJatuhTempo(), "");
+
+        System.out.println("=========================================================");
+        System.out.printf("| Bunga Per Bulan             : Rp %-20s |\n", String.format("%,.0f", bungaBulanan));
+        System.out.printf("| Bunga Per Tahun             : Rp %-20s |\n", String.format("%,.0f", bungaTahunan));
+        System.out.printf("| Total Bunga Selama %d Tahun  : Rp %-20s |\n", sbn.getJangkaWaktu(), String.format("%,.0f", bungaTahunan * sbn.getJangkaWaktu()));
+        System.out.printf("| Total Nilai Jatuh Tempo     : Rp %-20s |\n", String.format("%,.0f", nominal + (bungaTahunan * sbn.getJangkaWaktu())));
+        System.out.println("=========================================================");
     }
 
     public static List<SuratBerhargaNegara> getDaftarSBN() {
