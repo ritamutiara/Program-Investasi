@@ -11,7 +11,7 @@ public class MenuAdmin {
         while (!kembali) {
             System.out.println("\n===== MENU ADMIN =====");
             System.out.println("==================================");
-            System.out.printf("| %-30s |\n", "MENU CUSTOMER");
+            System.out.printf("| %-30s |\n", "MENU ADMIN");
             System.out.println("==================================");
             System.out.printf("| %-2s %-27s |\n", "1.", "Kelola Saham");
             System.out.printf("| %-2s %-27s |\n", "2.", "Kelola SBN");
@@ -91,7 +91,7 @@ public class MenuAdmin {
             System.out.printf("| %-30s |\n", "MENU KELOLA SBN");
             System.out.println("==================================");
             System.out.printf("| %-2s %-27s |\n", "1.", "Tambah SBN");
-            System.out.printf("| %-2s %-27s |\n", "2.", "Logout");
+            System.out.printf("| %-2s %-27s |\n", "2.", "Kembali");
             System.out.println("==================================");
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
