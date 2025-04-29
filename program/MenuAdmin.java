@@ -10,9 +10,13 @@ public class MenuAdmin {
         boolean kembali = false;
         while (!kembali) {
             System.out.println("\n===== MENU ADMIN =====");
-            System.out.println("1. Kelola Saham");
-            System.out.println("2. Kelola SBN");
-            System.out.println("3. Logout");
+            System.out.println("==================================");
+            System.out.printf("| %-30s |\n", "MENU CUSTOMER");
+            System.out.println("==================================");
+            System.out.printf("| %-2s %-27s |\n", "1.", "Kelola Saham");
+            System.out.printf("| %-2s %-27s |\n", "2.", "Kelola SBN");
+            System.out.printf("| %-2s %-27s |\n", "3.", "Logout");
+            System.out.println("==================================");
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
 
@@ -42,9 +46,13 @@ public class MenuAdmin {
         boolean kembali = false;
         while (!kembali) {
             System.out.println("\n===== MENU ADMIN SAHAM =====");
-            System.out.println("1. Tambah Saham");
-            System.out.println("2. Ubah Harga Saham");
-            System.out.println("3. Kembali");
+            System.out.println("==================================");
+            System.out.printf("| %-30s |\n", "MENU KELOLA SAHAM");
+            System.out.println("==================================");
+            System.out.printf("| %-2s %-27s |\n", "1.", "Tambah Saham");
+            System.out.printf("| %-2s %-27s |\n", "2.", "Ubah Harga Saham");
+            System.out.printf("| %-2s %-27s |\n", "3.", "Logout");
+            System.out.println("==================================");
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
 
@@ -79,8 +87,12 @@ public class MenuAdmin {
         boolean kembali = false;
         while (!kembali) {
             System.out.println("\n===== MENU ADMIN SBN =====");
-            System.out.println("1. Tambah SBN");
-            System.out.println("2. Kembali");
+            System.out.println("==================================");
+            System.out.printf("| %-30s |\n", "MENU KELOLA SBN");
+            System.out.println("==================================");
+            System.out.printf("| %-2s %-27s |\n", "1.", "Tambah SBN");
+            System.out.printf("| %-2s %-27s |\n", "2.", "Logout");
+            System.out.println("==================================");
 
             int pilihan = InputHelper.readNumber("Pilih menu: ");
 
